@@ -63,9 +63,20 @@ def get_sites():
 
     with open(cache_file) as fp:
         data = json.load(fp)
-        SITES = {site['id']:site['name'] for site in data['Locations']['Location']}
+        SITES = {site['id']:site_name(site) for site in data['Locations']['Location']}
 
     return SITES
+
+def site_name(site):
+    max_len = len('Hamilton (South Lana')
+    name = ''
+    if (site.has_key('unitaryAuthArea')):
+        name = "%s (%s)" % (site['name'], site['unitaryAuthArea'])
+    else:
+        name = site['name']
+    if len(name) > max_len:
+        name = name[:(max_len - 3)] + '...'
+    return name
 
 def rand_site():
     sites = get_sites()
@@ -89,7 +100,8 @@ def get_a_forecast(site):
                 'type':int(rep['W']),
                 'datetime': valid_time,
                 'wind_dir_deg':direction_to_deg[rep['D']],
-                'prob_precip': float(rep['Pp'])
+                'prob_precip': float(rep['Pp']),
+                'wind_gust':float(rep['G'])
             }
             forecasts.append(forecast)
     return forecasts

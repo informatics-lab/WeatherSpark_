@@ -9,7 +9,15 @@ import random
 
 import datapoint
 
-def get_wind(dir, value=0):
+def wind_strength(val):
+    if val < 8:
+        return ' →  '
+    if val < 20:
+        return ' ⇉  '
+    if val:
+        return ' ⇶  '
+
+def wind_dir(dir):
     """http://unicode-table.com/en/#1F865"""""
     dir = dir + 45/2
     dir = dir - 360 if dir >= 360 else dir
@@ -88,11 +96,6 @@ def clock(hr):
     c = s.decode('unicode-escape')
     return c
 
-
-# print ''
-# print ''.join(clocks(i) for i in range(12))
-# print ''
-
 def get_8th_bar(val):
     return unichr(9601 + val -1) if val > 0 else u' '
 
@@ -136,22 +139,23 @@ def forecast():
         if forecast['datetime'] < datetime.datetime.now():
             continue
         forecasts.append(forecast)
-        if(len(forecasts) >= 5):
+        if(len(forecasts) >= 7):
             break
 
-    print forecasts
-
     print name
-    print u'Time:',
+    print u'Time   ',
     print ''.join(clock(int(f['datetime'].hour)) for f in forecasts)
 
-    print u'Wind:',
-    print ''.join(get_wind(f['wind_dir_deg'],f['wind_speed']) for f in forecasts)
+    print u'Wind  ',
+    print ''.join(wind_strength(f['wind_gust']) for f in forecasts)
 
-    print u'Weat:',
+    print u'Wind  ',
+    print ''.join(wind_dir(f['wind_dir_deg']) for f in forecasts)
+
+    print u'Symb ',
     print ''.join(sigwx(f['type']) for f in forecasts)
 
-    print 'Rain:',
+    print '%Rain? ',
     print ''.join([perc_to_bar(f['prob_precip']) for f in forecasts])
 
     print u'Temp:',
