@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import division
+from __future__ import unicode_literals
 import math
 
 import datetime
@@ -11,11 +12,11 @@ import datapoint
 
 def wind_strength(val):
     if val < 8:
-        return ' →  '
+        return u' →  '
     if val < 20:
-        return ' ⇉  '
+        return u' ⇉  '
     if val:
-        return ' ⇶  '
+        return u' ⇶  '
 
 def wind_dir(dir):
     """http://unicode-table.com/en/#1F865"""""
@@ -65,9 +66,6 @@ def sigwx(code):
         return ("\\U%08x" % (127784)).decode('unicode-escape')
     if code in thunder:
         return u'\u26c8'
-    print code
-
-print ''.join((sigwx(i) for i in [0,1,2,3] + range(5, 31)))
 
 def graph(vals):
     minval = min(vals)
@@ -84,8 +82,7 @@ def graph(vals):
 def tosub(number_str):
     result = u''
     for c in number_str:
-
-        result += unichr(8320 + int(c)) if c is not '-' else u'\u208B'
+        result += unichr(8320 + int(c)) if not c == '-' else u'\u208B'
     return result
 
 
@@ -97,7 +94,7 @@ def clock(hr):
     return c
 
 def get_8th_bar(val):
-    return unichr(9601 + val -1) if val > 0 else u' '
+    return unichr(9601 + val -1) if val > 0 else u'   '
 
 
 def temp_bars(vals):
@@ -133,6 +130,7 @@ def perc_to_bar(percent):
 
 
 def forecast():
+    fcst = u""
     id, name = datapoint.rand_site()
     forecasts = []
     for forecast in datapoint.get_a_forecast(id):
@@ -142,35 +140,23 @@ def forecast():
         if(len(forecasts) >= 7):
             break
 
-    print name
-    print u'Time   ',
-    print ''.join(clock(int(f['datetime'].hour)) for f in forecasts)
+    fcst += u"%s" % name
+    fcst +=  u'\nTime   '
+    fcst += u''.join(clock(int(f['datetime'].hour)) for f in forecasts)
 
-    print u'Wind  ',
-    print ''.join(wind_strength(f['wind_gust']) for f in forecasts)
+    fcst +=  u'\nWind  '
+    fcst +=  u''.join(wind_strength(f['wind_gust']) for f in forecasts)
 
-    print u'Wind  ',
-    print ''.join(wind_dir(f['wind_dir_deg']) for f in forecasts)
+    fcst +=  u'\nWind  '
+    fcst +=  u''.join(wind_dir(f['wind_dir_deg']) for f in forecasts)
 
-    print u'Symb ',
-    print ''.join(sigwx(f['type']) for f in forecasts)
+    fcst +=  u'\nSymb '
+    fcst +=  u''.join(sigwx(f['type']) for f in forecasts)
 
-    print '%Rain? ',
-    print ''.join([perc_to_bar(f['prob_precip']) for f in forecasts])
+    fcst +=  u'\n%Rain? '
+    fcst +=  u''.join([perc_to_bar(f['prob_precip']) for f in forecasts])
 
-    print u'Temp:',
-    print temp_bars([t['temp'] for t in forecasts])
+    fcst +=  u'\nTemp:'
+    fcst +=  temp_bars([t['temp'] for t in forecasts])
 
-
-print ''.join([perc_to_bar(f) for f in [0,10,20,40,40,50,60,70,80,90,100]])
-forecast()
-print ''
-forecast()
-print ''
-forecast()
-print ''
-forecast()
-print ''
-forecast()
-print ''
-forecast()
+    return fcst

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import json
 import os
 import random
@@ -108,7 +111,7 @@ def get_a_forecast(site):
 
 def feels_like_temp_training_set():
     X, Y = [], []
-    print "Grabbing 3 hourly weather forecast from Met Office datapoint"
+    print ("Grabbing 3 hourly weather forecast from Met Office datapoint")
     req = urllib2.Request(url=GET_ALL_URL)
     res = urllib2.urlopen(req)
     data = json.load(res)
