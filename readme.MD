@@ -8,7 +8,7 @@ A twitter bot that tells the weather with unicode symbols
 
 
 ## Running
-[Get a Datapoint key]((http://register.metoffice.gov.uk/register/datapoint),
+[Get a Datapoint key](http://register.metoffice.gov.uk/register/datapoint),
 Get a twitter token and secret and a pair of access token and secret. See [Molly White's blog](http://blog.mollywhite.net/twitter-bots-pt2/) for help.
 Set up these as environment variables (mine are called `DATAPOINT_KEY`, `WEATHERSPARK_C_TOKEN`, `WEATHERSPARK_C_SECRET`, `WEATHERSPARK_A_SECRET` and `WEATHERSPARK_A_SECRET`)
 get docker and then...
