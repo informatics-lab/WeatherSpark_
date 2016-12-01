@@ -3,13 +3,13 @@ A twitter bot that tells the weather with unicode symbols
 
 ## With thanks to:
 * Weather data from the MetOffice Datapoint API
-* [http://blog.mollywhite.net/twitter-bots-pt2/](Molly White and her blog on twitter bots)
+* [Molly White and her blog on twitter bots](http://blog.mollywhite.net/twitter-bots-pt2/)
 * graphical web 2016 for inspiration.
 
 
 ## Running
-[(http://register.metoffice.gov.uk/register/datapoint](Get a Datapoint key),
-Get a twitter token and secret and a pair of access token and secret. See [http://blog.mollywhite.net/twitter-bots-pt2/](Molly White's blog) for help.
+[Get a Datapoint key]((http://register.metoffice.gov.uk/register/datapoint),
+Get a twitter token and secret and a pair of access token and secret. See [Molly White's blog](http://blog.mollywhite.net/twitter-bots-pt2/) for help.
 Set up these as environment variables (mine are called `DATAPOINT_KEY`, `WEATHERSPARK_C_TOKEN`, `WEATHERSPARK_C_SECRET`, `WEATHERSPARK_A_SECRET` and `WEATHERSPARK_A_SECRET`)
 get docker and then...
 
