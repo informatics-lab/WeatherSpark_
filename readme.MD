@@ -28,3 +28,24 @@ docker run \
  -e TWITTER_A_SECRET=$WEATHERSPARK_A_SECRET\
  -t weather_sparkline_bot
 ```
+
+
+## Deploy to AWS
+The app can be deployed to an AWS EC2 instance using terraform.
+Ensure that the environment variables:
+
+```
+TF_VAR_DATAPOINT_KEY
+TF_VAR_WEATHERSPARK_A_SECRET
+TF_VAR_WEATHERSPARK_C_TOKEN
+TF_VAR_WEATHERSPARK_C_SECRET
+TF_VAR_WEATHERSPARK_A_TOKEN
+```
+
+Are set up. And you AWS credentials too.
+
+The run:
+
+```
+terraform apply
+```

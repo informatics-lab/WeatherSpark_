@@ -26,4 +26,4 @@ for i in range(0):
 
 while True:
     tweet_random()
-    time.sleep(60*60*5)
+    time.sleep(60*5)
